@@ -1,12 +1,14 @@
 import React from 'react';
 import './App.css';
-import MenuItem from './Components/MenuItem'
 import MenuSection from './Components/MenuSection'
 import axios from 'axios'
 
 class App extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      meals: ["Breakfast", "Lunch", "Dinner", "Sides", "Dessert"]
+    }
   }
   componentDidMount() {
 
@@ -36,8 +38,10 @@ class App extends React.Component {
             <h1> React Restaurant</h1>
           </div>
         </div>
-        <MenuSection />
-        <MenuItem />
+        <MenuSection 
+          id={this.id}
+          type={this.type}
+        />
       </div>
 
     );
