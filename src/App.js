@@ -7,27 +7,30 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      meals: ["Breakfast", "Lunch", "Dinner", "Sides", "Dessert"]
+      menuSections: []
+
     }
   }
   componentDidMount() {
-
     let apiURL = 'http://awesomeincbootcampapi-ianrios529550.codeanyapp.com:3000/public/api/menu/sections'
+    let this_ = this;
 
     axios.get(apiURL)
-        .then(function (response) {
-            // handle success
-            console.log(response);
-        })
-        .catch(function (error) {
-            // handle error
-            console.log(error);
-        })
-        .then(function () {
-            // always executed
-        });
+      .then(function (response) {
+        // handle success
+        // console.log(response.data);
+        this_.setState({ menuSections: response.data })
 
-}
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+      .then(function () {
+        // always executed
+      });
+
+  }
   render() {
 
 
@@ -38,12 +41,8 @@ class App extends React.Component {
             <h1> React Restaurant</h1>
           </div>
         </div>
-        <MenuSection 
-          id={this.id}
-          type={this.type}
-        />
+        { this.state.menuSections.map((menuSection, index) => <MenuSection key={index} id={index} menuSection={menuSection} />)}
       </div>
-
     );
   }
 }

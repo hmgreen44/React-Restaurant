@@ -1,19 +1,28 @@
 import React, { Component } from 'react'
-import MenuItem from './Components/MenuItem'
+import MenuItem from './MenuItem'
 import axios from 'axios'
 
-export class MenuSection extends Component {
+class MenuSection extends React.Component {
     constructor(props) {
-        super(props);
+        super(props)
+        this.state = {
+            menuItems: []
+        }
     }
     componentDidMount() {
-
-        let apiURL = 'http://awesomeincbootcampapi-ianrios529550.codeanyapp.com:3000/public/api/menu/item'
-
-        axios.get(apiURL)
+        let apiURL = 'http://awesomeincbootcampapi-ianrios529550.codeanyapp.com:3000/public/api/menu/type/'
+        let this_ = this;
+        let menuItems = window.localStorage.getItem('menuItems' + this.props.id)
+        if (menuItems) {
+            this.setState({ menuItems: JSON.parse(menuItems) })
+        }
+        else {
+           
+        axios.get(apiURL + this.props.menuSection.id)
             .then(function (response) {
                 // handle success
-                console.log(response);
+                // console.log(response.data);
+                this_.setState({ menuItems: response.data })
             })
             .catch(function (error) {
                 // handle error
@@ -22,22 +31,20 @@ export class MenuSection extends Component {
             .then(function () {
                 // always executed
             });
-
+        }
     }
-
+    componentDidUpdate() {
+        window.localStorage.setItem('menuItems'+ this.props.id, JSON.stringify(this.state.menuItems))
+    }
     render() {
         return (
             <div className="row">
                 <div className="col">
                     <div className="card text-center">
-                        <h2 className="card-header">{this.type}</h2>
+                        <h2 className="card-header">{this.props.menuSection.type}</h2>
                     </div>
                 </div>
-                <MenuItem
-                    id={this.id}
-                    name={this.name}
-                    description={this.description}
-                />
+                { this.state.menuItems.map((menuItem, index) => <MenuItem key={index} menuItem={menuItem} />)}
             </div>
 
         );
