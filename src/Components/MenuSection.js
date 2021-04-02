@@ -11,22 +11,23 @@ class MenuSection extends Component {
         }
     }
     componentDidMount() {
+        //grabbing data from local storage.
         let menuItems = window.localStorage.getItem('menuItems' + this.props.id)
         if (menuItems) {
             this.setState({ menuItems: JSON.parse(menuItems) })
         }
         else {
+            // if there is no local storage running axiosHelper will run, as well as an if statement in order to run the axios again on section id 1 (breakfast) in order to show 20 items instead of 10
             this.axiosHelper()
             if (this.props.menuSection.id == 1) {
                 this.axiosHelper()
             }
         }
-
     }
     componentDidUpdate() {
         window.localStorage.setItem('menuItems' + this.props.id, JSON.stringify(this.state.menuItems))
     }
-
+    //added variable called price with a math.random to create a price from 1 to 10
     getPrice() {
         let price = Math.floor((Math.random() * 10)) + 1;
         console.log(price)

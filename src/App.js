@@ -38,10 +38,20 @@ class App extends React.Component {
       <div className="App container">
         <div className="row">
           <div className="col text-center mt-5">
-            <h1> React Restaurant</h1>
+            <h1> Le Pain Cafe</h1>
           </div>
         </div>
-        { this.state.menuSections.map((menuSection, index) => <MenuSection key={index} id={index} menuSection={menuSection} />)}
+        <div className="row">
+          <div className="col text-center mt-3">
+            <h3> 9181 Oak St. Franklin, MA 02038</h3>
+          </div>
+          <div className="row">
+            <div className="col text-center mt-3">
+              <h4>Open 24 hours, 7 days a week!</h4>
+            </div>
+            {this.state.menuSections.map((menuSection, index) => <MenuSection key={index} id={index} menuSection={menuSection} />)}
+          </div>
+        </div>
       </div>
     );
   }
